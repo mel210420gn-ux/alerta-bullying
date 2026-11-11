@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALERTA BULLYING | Estoy contigo</title>
+<style>
+:root{--violet:#7356d8;--pink:#ff7aa8;--blue:#5bb9e8;--ink:#27304a;--muted:#65708a;--bg:#f6f4ff;--white:#fff;--green:#35b88a}
+*{box-sizing:border-box}body{margin:0;font-family:Arial, sans-serif;background:linear-gradient(135deg,#f6f4ff,#fff1f6);color:var(--ink)}
+header{background:linear-gradient(110deg,#6248c6,#9a70e8);color:white;padding:22px 16px 28px;text-align:center;border-radius:0 0 28px 28px}
+header .logo{font-size:42px}h1{margin:6px 0;font-size:28px}header p{margin:6px auto;max-width:600px;line-height:1.45}
+nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:16px auto;max-width:900px;padding:0 10px}
+nav button,.btn{border:0;border-radius:14px;padding:12px 16px;background:white;color:#5b48b1;font-weight:bold;cursor:pointer;box-shadow:0 3px 12px #38208014}
+nav button.active,.btn.primary{background:var(--violet);color:white}
+main{max-width:950px;margin:auto;padding:8px 14px 36px}.panel{display:none}.panel.active{display:block}
+.card{background:white;border-radius:22px;padding:20px;margin:12px 0;box-shadow:0 8px 24px #49328a12}
+h2{margin:0 0 10px;color:#6049bd}h3{margin:8px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.tile{border:2px solid #eee9ff;border-radius:18px;padding:16px;background:#fff;text-align:left;cursor:pointer}
+.tile b{display:block;font-size:17px;margin:7px 0}.emoji{font-size:30px}
+textarea,input{width:100%;border:2px solid #e6e0fa;border-radius:14px;padding:13px;font:inherit;margin:8px 0}
+.chat{background:#f7f5ff;border-radius:18px;padding:14px;min-height:180px;max-height:320px;overflow:auto}
+.msg{padding:11px 13px;border-radius:15px;margin:8px 0;max-width:90%;line-height:1.4;white-space:pre-wrap}
+.bot{background:white;border:1px solid #ece6ff}.user{background:#e8f5ff;margin-left:auto}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.quick button{border:1px solid #d9cffb;background:#f8f5ff;color:#5946a9;border-radius:20px;padding:9px 12px;cursor:pointer}
+.note{background:#fff7df;border-left:5px solid #f1bd4b;padding:13px;border-radius:12px;line-height:1.45}
+.good{background:#e9fbf4;border-left:5px solid var(--green);padding:13px;border-radius:12px}
+footer{text-align:center;color:var(--muted);padding:18px;font-size:13px}
+button:focus,input:focus,textarea:focus{outline:3px solid #c8baff}
+</style>
+</head>
+<body>
+<header><div class="logo">💜🛡️</div><h1>ALERTA BULLYING</h1><p><b>No estás solo. Tu voz importa.</b><br>Un espacio para aprender a cuidarnos, pedir ayuda y tratar a todos con respeto.</p></header>
+<nav>
+<button class="active" data-tab="inicio">🏠 Inicio</button><button data-tab="consejero">💬 Consejero</button><button data-tab="juegos">🎮 Aprendemos</button><button data-tab="ayuda">🆘 Pedir ayuda</button>
+</nav>
+<main>
+<section id="inicio" class="panel active">
+<div class="card"><h2>¡Hola! Me alegra que estés aquí 🌈</h2><p>En este espacio puedes expresar cómo te sientes y aprender qué hacer si alguien te lastima o si ves que molestan a otra persona.</p><div class="good"><b>Recuerda:</b> nadie merece burlas, amenazas ni golpes. No es tu culpa y pedir ayuda es valiente.</div></div>
+<div class="grid">
+<button class="tile" onclick="showTab('consejero')"><span class="emoji">💬</span><b>Quiero conversar</b>Cuéntame cómo te sientes.</button>
+<button class="tile" onclick="showTab('juegos')"><span class="emoji">🎮</span><b>Quiero aprender</b>Juega y descubre cómo actuar.</button>
+<button class="tile" onclick="showTab('ayuda')"><span class="emoji">🆘</span><b>Necesito ayuda</b>Busca apoyo de una persona adulta.</button>
+</div></section>
+<section id="consejero" class="panel">
+<div class="card"><h2>💬 Consejero de apoyo</h2><p>Elige lo que te está pasando o escribe un mensaje. Te responderé con orientación y palabras de apoyo.</p>
+<div class="quick"><button onclick="ask('Me siento triste')">😢 Estoy triste</button><button onclick="ask('Tengo miedo')">😟 Tengo miedo</button><button onclick="ask('Se burlan de mí')">😔 Se burlan de mí</button><button onclick="ask('Me dejan fuera')">🥺 Me excluyen</button><button onclick="ask('Me molestan por internet')">📱 Ciberacoso</button><button onclick="ask('Quiero ayudar a un compañero')">🤝 Quiero ayudar</button></div>
+<div class="chat" id="chat"><div class="msg bot">¡Hola! 💜 Estoy aquí para orientarte. ¿Qué está pasando? Puedes contármelo con tus propias palabras.</div></div>
+<form onsubmit="send(event)"><input id="entry" placeholder="Escribe aquí..." aria-label="Escribe tu mensaje"><button class="btn primary" type="submit">Enviar</button></form>
+<div class="note"><b>Importante:</b> este consejero es un prototipo educativo con respuestas guiadas, no una persona ni una IA conectada. Si estás en peligro, ve ahora con un adulto de confianza.</div></div>
+</section>
+<section id="juegos" class="panel">
+<div class="card"><h2>🎮 ¿Qué harías tú?</h2><p>Lee cada situación y elige una respuesta.</p><div id="quiz"><h3 id="question">Ves que varios compañeros se ríen siempre de un niño y lo insultan. ¿Qué puedes hacer?</h3><div class="grid" id="answers"></div><p id="feedback" aria-live="polite"></p><button class="btn primary" onclick="nextQuestion()">Siguiente situación</button></div></div>
+<div class="card"><h3>🌟 Palabras que hacen bien</h3><p>“Te escucho.” · “No estás solo.” · “Mereces respeto.” · “Vamos a buscar ayuda juntos.”</p></div>
+</section>
+<section id="ayuda" class="panel">
+<div class="card"><h2>🆘 Pedir ayuda es valiente</h2><p>Si algo te hace sentir miedo, tristeza o inseguridad, no tienes que resolverlo a solas.</p>
+<h3>Busca a una persona adulta de confianza:</h3><ul><li>Tu mamá, papá o familiar.</li><li>Tu docente o tutor.</li><li>La psicóloga o dirección de tu colegio.</li></ul>
+<div class="good"><b>Puedes decir:</b><br>“Necesito contarte algo. Está pasando una situación que me hace sentir mal y necesito que me ayudes. Por favor, escúchame”.</div>
+<p>Si hay golpes, amenazas o peligro inmediato, aléjate si puedes hacerlo con seguridad y busca a un adulto ahora mismo. No enfrentes a quien te agrede.</p>
+<p>En Perú, las familias y escuelas pueden consultar el portal oficial <a href="https://siseve.minedu.gob.pe/" target="_blank" rel="noopener">SíseVe del Ministerio de Educación</a> para orientación y reporte de violencia escolar.</p>
+</div></section>
+</main>
+<footer>ALERTA BULLYING · Prototipo educativo para promover el respeto, la empatía y la convivencia.</footer>
+<script>
+function showTab(id){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+function addMsg(t,who){let d=document.createElement('div');d.className='msg '+who;d.textContent=t;let c=document.getElementById('chat');c.appendChild(d);c.scrollTop=c.scrollHeight}
+function reply(t){let s=t.toLowerCase();if(/peligro|golpe|amenaz|herid|matar/.test(s))return 'Lo más importante es tu seguridad. Aléjate si puedes hacerlo sin riesgo y busca AHORA a un adulto de confianza: docente, familiar o dirección. No tienes que enfrentar esto a solas. 💜';
+if(/internet|redes|foto|mensaje|chat/.test(s))return 'Siento que estés pasando por esto. No respondas con insultos ni reenvíes el contenido. Guarda la evidencia si es seguro y muéstrasela a un adulto de confianza para que te ayude a bloquear y reportar.';
+if(/ayudar|compañer|amigo|amiga/.test(s))return 'Qué bueno que quieras ayudar. Escúchale sin juzgar, no difundas lo que te cuente y acompáñale a hablar con un adulto de confianza. No intentes resolverlo enfrentando a quien agrede.';
+if(/triste|miedo|llor|solo|sola|exclu|fuera/.test(s))return 'Gracias por contármelo. Lo que sientes importa y mereces que te traten bien. No es tu culpa. Busca a una persona adulta de confianza y dile: “Me siento mal por lo que está pasando y necesito que me escuches”. 💜';
+if(/burla|insult|molest|apodo|pegan|empuj/.test(s))return 'Nadie tiene derecho a humillarte ni lastimarte. Si es seguro, puedes decir con voz firme: “No me gusta que me trates así”. Después cuéntaselo a un adulto de confianza, especialmente si se repite. No es tu culpa.';
+return 'Gracias por confiarme lo que pasa. Tus sentimientos son importantes. Mereces respeto y apoyo. ¿Puedes hablar hoy con un adulto de confianza? Puedes decirle: “Necesito ayuda con algo que me está pasando”.';}
+function ask(t){addMsg(t,'user');setTimeout(()=>addMsg(reply(t),'bot'),180)}
+function send(e){e.preventDefault();let i=document.getElementById('entry'),t=i.value.trim();if(!t)return;ask(t);i.value=''}
+const qs=[['Ves que varios compañeros se ríen siempre de un niño y lo insultan. ¿Qué puedes hacer?',[['Reírte también','bad'],['Acompañarlo y avisar a un adulto','good'],['Grabarlo y compartirlo','bad']]],['Un compañero nuevo está solo durante el recreo. ¿Qué puedes hacer?',[['Invitarlo a jugar','good'],['Ignorarlo','bad'],['Burlarte de él','bad']]],['Alguien te manda mensajes hirientes por internet. ¿Qué haces?',[['Insultar de vuelta','bad'],['Guardar evidencia y pedir ayuda a un adulto','good'],['Compartirlo con todos','bad']]]];let qi=0;
+function renderQ(){document.getElementById('question').textContent=qs[qi][0];document.getElementById('feedback').textContent='';let a=document.getElementById('answers');a.innerHTML='';qs[qi][1].forEach(([v,k])=>{let b=document.createElement('button');b.className='tile';b.textContent=v;b.onclick=()=>{document.getElementById('feedback').textContent=k==='good'?'¡Muy bien! 🌟 Esa acción demuestra respeto y ayuda a cuidar a los demás.':'Intentemos otra opción. Una buena decisión protege, acompaña y busca ayuda.'};a.appendChild(b)})}
+function nextQuestion(){qi=(qi+1)%qs.length;renderQ()}renderQ();
+</script></body></html>
